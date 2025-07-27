@@ -82,17 +82,17 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   opacity: 0;
   visibility: hidden;
   transform: translateX(30px) scale(0.95);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
   background: var(--color-white);
   padding: var(--spacing-xl);
   border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
   filter: blur(2px);
+  box-sizing: border-box;
 }
 
 .tab-content--active {
@@ -103,30 +103,67 @@
   filter: blur(0);
 }
 
-/* Tab content scrollbar */
-.tab-content::-webkit-scrollbar {
-  width: var(--spacing-md);
-}
+/* Tab content container scrollbar - Desktop only */
+@media (min-width: 769px) {
+  .tab-content-container {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-gray-100);
+  }
+  
+  .tab-content-container::-webkit-scrollbar {
+    width: var(--spacing-md);
+  }
 
-.tab-content::-webkit-scrollbar-track {
-  background: var(--color-gray-100);
-  border-radius: var(--border-radius-lg);
-  margin: var(--spacing-xs);
-}
+  .tab-content-container::-webkit-scrollbar-track {
+    background: var(--color-gray-100);
+    border-radius: var(--border-radius-lg);
+    margin: var(--spacing-xs);
+  }
 
-.tab-content::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: var(--border-radius-lg);
-  border: 2px solid var(--color-gray-100);
-}
+  .tab-content-container::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: var(--border-radius-lg);
+    border: 2px solid var(--color-gray-100);
+  }
 
-.tab-content::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-hover);
-}
-
-.tab-content {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) var(--color-gray-100);
+  .tab-content-container::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-hover);
+  }
+  
+  /* Ensure tab content itself doesn't have scrollbars on desktop */
+  .tab-content {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 100%;
+  }
+  
+  .tab-content::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .tab-content::-webkit-scrollbar-track {
+    display: none !important;
+  }
+  
+  .tab-content::-webkit-scrollbar-thumb {
+    display: none !important;
+  }
+  
+  /* Prevent any nested scrollable elements from creating scrollbars */
+  .tab-content .tab-content__rows {
+    overflow: visible !important;
+  }
+  
+  .tab-content * {
+    overflow-x: visible !important;
+  }
+  
+  /* Force all content to be visible and not scrollable */
+  .tab-content .tab-content__rows::-webkit-scrollbar {
+    display: none !important;
+  }
 }
 
 /* ==========================================================================
@@ -146,7 +183,7 @@
   flex-direction: column;
   gap: var(--spacing-lg);
   flex: 1;
-  overflow-y: auto;
+  overflow: visible;
 }
 
 .tab-content__row {
@@ -306,16 +343,6 @@
     visibility: visible !important;
     transform: none !important;
     filter: none !important;
-    z-index: 10;
-  }
-  
-  .tab-content--active {
-    position: relative !important;
-    height: auto !important;
-    min-height: 100px;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
     z-index: 10;
   }
   
