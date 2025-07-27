@@ -1,0 +1,377 @@
+/* ==========================================================================
+   LAYOUT COMPONENT
+   ==========================================================================
+   Description: Main layout structure and positioning
+   Dependencies: variables.css
+   ========================================================================== */
+
+/* ==========================================================================
+   MAIN LAYOUT STRUCTURE
+   ========================================================================== */
+
+.dashboard-content {
+  margin-left: var(--sidebar-width);
+  background: var(--color-white);
+  border-radius: var(--border-radius-xl) 0 0 0;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height));
+}
+
+.dashboard-main {
+  padding: var(--spacing-xl);
+  background-color: var(--color-gray-50);
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-layout {
+  display: flex;
+  gap: var(--spacing-2xl);
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   CONTENT FRAME (Main Content Area)
+   ========================================================================== */
+
+.content-frame {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  height: 100%;
+  flex: 1;
+}
+
+.content-frame__header {
+  height: 10%;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+}
+
+.content-frame__header-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--color-white);
+}
+
+.content-frame__body {
+  flex: 1;
+  background-color: var(--color-white);
+  border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
+  margin-top: var(--spacing-2xl);
+  overflow: hidden;
+}
+
+.content-frame__body-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   GRID LAYOUTS
+   ========================================================================== */
+
+.grid {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.grid--cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid--cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--cols-auto {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Grid gaps */
+.grid--gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.grid--gap-md {
+  gap: var(--spacing-md);
+}
+
+.grid--gap-lg {
+  gap: var(--spacing-lg);
+}
+
+.grid--gap-xl {
+  gap: var(--spacing-xl);
+}
+
+/* ==========================================================================
+   FLEXBOX LAYOUTS
+   ========================================================================== */
+
+.flex {
+  display: flex;
+}
+
+.flex--column {
+  flex-direction: column;
+}
+
+.flex--row {
+  flex-direction: row;
+}
+
+.flex--wrap {
+  flex-wrap: wrap;
+}
+
+.flex--nowrap {
+  flex-wrap: nowrap;
+}
+
+/* Justify content */
+.flex--justify-start {
+  justify-content: flex-start;
+}
+
+.flex--justify-center {
+  justify-content: center;
+}
+
+.flex--justify-end {
+  justify-content: flex-end;
+}
+
+.flex--justify-between {
+  justify-content: space-between;
+}
+
+.flex--justify-around {
+  justify-content: space-around;
+}
+
+/* Align items */
+.flex--align-start {
+  align-items: flex-start;
+}
+
+.flex--align-center {
+  align-items: center;
+}
+
+.flex--align-end {
+  align-items: flex-end;
+}
+
+.flex--align-stretch {
+  align-items: stretch;
+}
+
+/* Flex gaps */
+.flex--gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.flex--gap-md {
+  gap: var(--spacing-md);
+}
+
+.flex--gap-lg {
+  gap: var(--spacing-lg);
+}
+
+.flex--gap-xl {
+  gap: var(--spacing-xl);
+}
+
+/* ==========================================================================
+   SPACING UTILITIES
+   ========================================================================== */
+
+/* Margin utilities */
+.m-0 { margin: 0; }
+.m-xs { margin: var(--spacing-xs); }
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+.m-xl { margin: var(--spacing-xl); }
+.m-2xl { margin: var(--spacing-2xl); }
+
+/* Margin top */
+.mt-0 { margin-top: 0; }
+.mt-xs { margin-top: var(--spacing-xs); }
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+.mt-2xl { margin-top: var(--spacing-2xl); }
+
+/* Margin bottom */
+.mb-0 { margin-bottom: 0; }
+.mb-xs { margin-bottom: var(--spacing-xs); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+.mb-2xl { margin-bottom: var(--spacing-2xl); }
+
+/* Padding utilities */
+.p-0 { padding: 0; }
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+.p-2xl { padding: var(--spacing-2xl); }
+
+/* Padding top */
+.pt-0 { padding-top: 0; }
+.pt-xs { padding-top: var(--spacing-xs); }
+.pt-sm { padding-top: var(--spacing-sm); }
+.pt-md { padding-top: var(--spacing-md); }
+.pt-lg { padding-top: var(--spacing-lg); }
+.pt-xl { padding-top: var(--spacing-xl); }
+.pt-2xl { padding-top: var(--spacing-2xl); }
+
+/* Padding bottom */
+.pb-0 { padding-bottom: 0; }
+.pb-xs { padding-bottom: var(--spacing-xs); }
+.pb-sm { padding-bottom: var(--spacing-sm); }
+.pb-md { padding-bottom: var(--spacing-md); }
+.pb-lg { padding-bottom: var(--spacing-lg); }
+.pb-xl { padding-bottom: var(--spacing-xl); }
+.pb-2xl { padding-bottom: var(--spacing-2xl); }
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT
+   ========================================================================== */
+
+/* Tablet and Mobile */
+@media (max-width: 1200px) {
+  .dashboard-layout {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  
+  .content-frame {
+    width: 100%;
+  }
+  
+  .grid--cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid--cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 0;
+  }
+  
+  .dashboard-content {
+    margin-left: 0;
+    border-radius: 0;
+  }
+  
+  .dashboard-main {
+    padding: var(--spacing-lg);
+  }
+  
+  .content-frame__body {
+    padding: var(--spacing-lg);
+  }
+  
+  .grid--cols-4,
+  .grid--cols-3,
+  .grid--cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid--cols-auto {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Stack flex items on mobile */
+  .flex--column-mobile {
+    flex-direction: column;
+  }
+  
+  .flex--wrap-mobile {
+    flex-wrap: wrap;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .dashboard-main {
+    padding: var(--spacing-md);
+  }
+  
+  .content-frame__body {
+    padding: var(--spacing-md);
+  }
+  
+  .dashboard-layout {
+    gap: var(--spacing-md);
+  }
+}
+
+/* Ultra Small Mobile */
+@media (max-width: 320px) {
+  .dashboard-main {
+    padding: 0.5rem;
+  }
+  
+  .content-frame__body {
+    padding: 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES - Layout
+   ========================================================================== */
+
+@media print {
+  .dashboard-content {
+    margin-left: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  
+  .dashboard-layout {
+    flex-direction: column !important;
+  }
+  
+  .content-frame {
+    width: 100% !important;
+    box-shadow: none !important;
+  }
+  
+  .dashboard-main {
+    padding: 0 !important;
+  }
+} 

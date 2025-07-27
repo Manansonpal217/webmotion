@@ -1,0 +1,221 @@
+/* ==========================================================================
+   HEADER COMPONENT
+   ==========================================================================
+   Description: Main dashboard header with navigation and user info
+   Dependencies: variables.css
+   ========================================================================== */
+
+.dashboard-header {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 0 var(--spacing-xl);
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1000;
+}
+
+/* Header Sections */
+.dashboard-header__section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.dashboard-header__section--center {
+  flex: 1;
+  justify-content: center;
+}
+
+/* Header Menu Button */
+.header-menu-btn {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  padding: var(--spacing-lg) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+}
+
+.header-menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.header-menu-btn:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.header-menu-btn__icon {
+  width: 0.875rem;
+  height: 1.25rem;
+  filter: brightness(0) invert(1);
+}
+
+.header-menu-btn__text {
+  /* Text will be hidden on mobile via responsive styles */
+}
+
+/* Header Icon Buttons */
+.header-icon-btn {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  padding: var(--spacing-lg) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+}
+
+.header-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.header-icon-btn:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.header-icon-btn__icon {
+  filter: brightness(0) invert(1);
+}
+
+.header-icon-btn__icon--notification {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.header-icon-btn__icon--email {
+  width: 1.47rem;
+  height: 1.25rem;
+}
+
+.header-icon-btn__icon--bell {
+  width: 1rem;
+  height: 1.25rem;
+}
+
+/* Header Title */
+.dashboard-header__title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  margin: 0;
+}
+
+/* Header User Info */
+.dashboard-header__user-name {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  margin-right: var(--spacing-md);
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES - Header
+   ========================================================================== */
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+  :root {
+    --header-height: 4.375rem;
+  }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1920px) {
+  :root {
+    --header-height: 5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 3.5rem;
+  }
+  
+  .dashboard-header {
+    padding: 0 var(--spacing-lg);
+  }
+  
+  .dashboard-header__section {
+    gap: var(--spacing-md);
+  }
+  
+  .header-menu-btn__text {
+    display: none;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  :root {
+    --header-height: 3.25rem;
+  }
+  
+  .dashboard-header {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .dashboard-header__section {
+    gap: var(--spacing-sm);
+  }
+  
+  .dashboard-header__user-name {
+    margin-right: var(--spacing-sm);
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  :root {
+    --header-height: 3rem;
+  }
+  
+  .dashboard-header {
+    padding: 0 0.625rem;
+  }
+  
+  .dashboard-header__section {
+    gap: 0.375rem;
+  }
+  
+  .dashboard-header__user-name {
+    margin-right: 0.375rem;
+  }
+}
+
+/* Ultra Small Mobile */
+@media (max-width: 320px) {
+  :root {
+    --header-height: 2.875rem;
+  }
+  
+  .dashboard-header {
+    padding: 0 0.5rem;
+  }
+  
+  .dashboard-header__section {
+    gap: 0.25rem;
+  }
+  
+  .dashboard-header__user-name {
+    display: none;
+  }
+} 

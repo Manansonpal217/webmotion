@@ -1,0 +1,285 @@
+/* ==========================================================================
+   NAVIGATION COMPONENT
+   ==========================================================================
+   Description: Navigation menu and breadcrumb styles
+   Dependencies: variables.css
+   ========================================================================== */
+
+/* ==========================================================================
+   NAVIGATION MENU
+   ========================================================================== */
+
+.dashboard-nav {
+  background: var(--color-gray-200);
+  padding: 0 var(--spacing-2xl);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gray-300);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 100;
+}
+
+.dashboard-nav__menu {
+  display: flex;
+  gap: var(--spacing-2xl);
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding-right: var(--spacing-sm);
+  position: relative;
+}
+
+.dashboard-nav__item {
+  background: none;
+  border: none;
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  padding: 0.875rem 0 1.125rem 0;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-normal);
+  border-radius: var(--border-radius-sm);
+  outline: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--font-family-primary);
+}
+
+.dashboard-nav__item:hover {
+  color: var(--color-black);
+  transform: translateY(-1px);
+}
+
+.dashboard-nav__item:focus-visible {
+  color: var(--color-black);
+  box-shadow: 0 0 0 2px var(--color-primary);
+  outline: 2px solid transparent;
+}
+
+.dashboard-nav__item:active {
+  transform: translateY(0);
+}
+
+.dashboard-nav__item--active {
+  color: var(--color-black);
+  font-weight: var(--font-weight-medium);
+}
+
+.dashboard-nav__item--active::after {
+  content: '';
+  position: absolute;
+  bottom: -1.125rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 1px;
+  animation: slideIn var(--transition-normal);
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+    left: 50%;
+    right: 50%;
+  }
+  to {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+}
+
+/* ==========================================================================
+   BREADCRUMBS
+   ========================================================================== */
+
+.dashboard-breadcrumbs {
+  background: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.dashboard-breadcrumbs__list {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-600);
+  justify-content: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-breadcrumbs__separator {
+  margin: 0 var(--spacing-xs);
+  color: var(--color-gray-600);
+}
+
+.dashboard-breadcrumbs__item {
+  color: var(--color-gray-600);
+}
+
+.dashboard-breadcrumbs__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  filter: brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(2000%) hue-rotate(200deg) brightness(95%) contrast(85%);
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES - Navigation
+   ========================================================================== */
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+  .dashboard-nav {
+    padding: 0.9375rem 1.25rem;
+  }
+  
+  .dashboard-nav__menu {
+    gap: 2rem;
+  }
+  
+  .dashboard-nav__item {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-medium);
+    padding: 0.9375rem 0 1.1875rem 0;
+  }
+  
+  .dashboard-nav__item--active::after {
+    bottom: -1.1875rem;
+    height: 3px;
+  }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1920px) {
+  .dashboard-nav {
+    padding: 1rem 1.875rem;
+  }
+  
+  .dashboard-nav__menu {
+    gap: 2.5rem;
+  }
+  
+  .dashboard-nav__item {
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    padding: 1rem 0 1.25rem 0;
+  }
+  
+  .dashboard-nav__item--active::after {
+    bottom: -1.25rem;
+    height: 3px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .dashboard-nav {
+    padding: 0.4375rem 0.75rem;
+  }
+  
+  .dashboard-nav__menu {
+    gap: 1.125rem;
+    overflow-x: auto;
+    padding-bottom: 0.375rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-gray-200);
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .dashboard-nav__menu::-webkit-scrollbar {
+    height: 0.5rem;
+  }
+  
+  .dashboard-nav__menu::-webkit-scrollbar-track {
+    background: var(--color-gray-200);
+    border-radius: 0.625rem;
+  }
+  
+  .dashboard-nav__menu::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 0.625rem;
+    border: 1px solid var(--color-gray-200);
+  }
+  
+  .dashboard-nav__item {
+    font-size: 0.8125rem;
+    font-weight: 450;
+    white-space: nowrap;
+    padding: 0.375rem 0 0.4375rem 0;
+    min-width: fit-content;
+  }
+  
+  .dashboard-nav__item--active::after {
+    bottom: -0.75rem;
+    height: 2px;
+  }
+  
+  .dashboard-breadcrumbs {
+    padding: 0.5rem var(--spacing-lg);
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .dashboard-nav {
+    padding: 0.5rem var(--spacing-md);
+  }
+  
+  .dashboard-nav__menu {
+    gap: 0.875rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .dashboard-nav__menu::-webkit-scrollbar {
+    height: 0.3125rem;
+  }
+  
+  .dashboard-nav__item {
+    font-size: 0.75rem;
+    font-weight: 450;
+    padding: 0.3125rem 0 0.375rem 0;
+  }
+  
+  .dashboard-nav__item--active::after {
+    bottom: -0.5rem;
+    height: 2px;
+  }
+  
+  .dashboard-breadcrumbs {
+    padding: 0.375rem var(--spacing-md);
+  }
+}
+
+/* Ultra Small Mobile */
+@media (max-width: 320px) {
+  .dashboard-nav {
+    padding: 0.375rem 0.5rem;
+  }
+  
+  .dashboard-nav__menu {
+    gap: 0.625rem;
+    padding-bottom: 0.375rem;
+  }
+  
+  .dashboard-nav__menu::-webkit-scrollbar {
+    height: 0.25rem;
+  }
+  
+  .dashboard-nav__item {
+    font-size: 0.6875rem;
+    font-weight: 450;
+    padding: 0.25rem 0 0.3125rem 0;
+  }
+  
+  .dashboard-nav__item--active::after {
+    bottom: -0.4375rem;
+    height: 2px;
+  }
+} 

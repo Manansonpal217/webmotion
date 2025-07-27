@@ -1,0 +1,254 @@
+/* ==========================================================================
+   BUTTON COMPONENT
+   ==========================================================================
+   Description: All button styles and variants
+   Dependencies: variables.css
+   ========================================================================== */
+
+/* Base Button Class */
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+  transition: background-color var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+  text-decoration: none;
+  outline: none;
+  position: relative;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Primary Button */
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  height: 2.25rem;
+  padding: 0.4375rem 0.75rem;
+  white-space: nowrap;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--color-primary-dark);
+  transform: translateY(1px);
+}
+
+/* Secondary Button */
+.btn--secondary {
+  background: var(--color-gray-50);
+  color: var(--color-gray-600);
+  height: 2.25rem;
+  width: 2.25rem;
+  padding: 0.4375rem;
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-gray-200);
+}
+
+.btn--secondary:active:not(:disabled) {
+  background: var(--color-gray-300);
+  transform: translateY(1px);
+}
+
+/* Button Icon */
+.btn__icon {
+  width: 1.0625rem;
+  height: 0.9375rem;
+  display: block;
+}
+
+/* Communication Buttons */
+.communication-section__button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-gray-50);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  border: none;
+  font-family: var(--font-family-primary);
+}
+
+.communication-section__button:hover {
+  background: var(--color-gray-200);
+}
+
+.communication-section__button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.communication-section__button:active {
+  background: var(--color-gray-300);
+  transform: translateY(1px);
+}
+
+.communication-section__icon {
+  display: block;
+}
+
+.communication-section__icon--chat {
+  width: 1.6875rem;
+  height: 1.5rem;
+}
+
+.communication-section__icon--email {
+  width: 1.625rem;
+  height: 1.375rem;
+}
+
+.communication-section__icon--whatsapp {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+.communication-section__icon--call {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+.communication-section__text {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+  color: var(--color-gray-600);
+  margin-left: var(--spacing-xs);
+}
+
+/* Button Loading State */
+.btn--loading {
+  pointer-events: none;
+  position: relative;
+}
+
+.btn--loading::after {
+  content: '';
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Button with Icon and Text */
+.btn--icon-text {
+  gap: var(--spacing-sm);
+}
+
+.btn--icon-text .btn__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Large Button Variant */
+.btn--large {
+  height: 3rem;
+  padding: 0.75rem 1.5rem;
+  font-size: var(--font-size-base);
+}
+
+/* Small Button Variant */
+.btn--small {
+  height: 1.75rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.6875rem;
+}
+
+/* Ghost Button Variant */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Danger Button Variant */
+.btn--danger {
+  background: #dc3545;
+  color: var(--color-white);
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: #c82333;
+}
+
+/* Success Button Variant */
+.btn--success {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.btn--success:hover:not(:disabled) {
+  background: #8bc924;
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES - Buttons
+   ========================================================================== */
+
+/* Touch devices - larger touch targets */
+@media (max-width: 768px) {
+  .btn {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .btn--secondary {
+    height: 2.75rem;
+    width: 2.75rem;
+    padding: 0.5rem;
+  }
+  
+  .communication-section__button {
+    padding: var(--spacing-md) var(--spacing-lg);
+    min-height: 2.75rem;
+  }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+  .btn {
+    font-size: 0.6875rem;
+  }
+  
+  .btn--large {
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-sm);
+  }
+} 

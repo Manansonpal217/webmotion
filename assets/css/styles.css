@@ -1,0 +1,232 @@
+/* ==========================================================================
+   WebMotion Dashboard - Main Stylesheet
+   ==========================================================================
+   Author: Development Team
+   Description: Modern responsive dashboard interface
+   Architecture: Component-based CSS with CSS custom properties
+   Last Updated: 2024
+   
+   File Structure:
+   - base/variables.css     : CSS variables, reset, utilities
+   - components/header.css  : Header navigation and branding
+   - components/navigation.css : Menu navigation and breadcrumbs
+   - components/buttons.css : All button styles and variants
+   - components/forms.css   : Form elements and dropdowns
+   - components/profile-card.css : User profile card component
+   - components/tabs.css    : Tab navigation and content
+   - components/layout.css  : Layout structure and utilities
+   
+   Usage:
+   This file imports all component stylesheets in the correct order.
+   Modify individual component files rather than this main file.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. BASE STYLES - Variables, reset, and utilities
+   ========================================================================== */
+@import 'base/variables.css';
+
+/* ==========================================================================
+   2. LAYOUT COMPONENTS - Structure and positioning
+   ========================================================================== */
+@import 'components/layout.css';
+
+/* ==========================================================================
+   3. UI COMPONENTS - Interface elements (order matters for cascading)
+   ========================================================================== */
+@import 'components/header.css';
+@import 'components/navigation.css';
+@import 'components/buttons.css';
+@import 'components/forms.css';
+@import 'components/profile-card.css';
+@import 'components/tabs.css';
+
+/* ==========================================================================
+   4. RESPONSIVE DESIGN - Global responsive utilities
+   ========================================================================== */
+
+/* Container queries for modern responsive design */
+@container (max-width: 768px) {
+  .container-responsive {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-gray-200: #000000;
+    --color-gray-500: #000000;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Dark theme support (ready for implementation) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Uncomment and customize when implementing dark theme */
+    /*
+    --color-white: #1a1a1a;
+    --color-black: #ffffff;
+    --color-gray-50: #2d2d2d;
+    --color-gray-100: #3a3a3a;
+    --color-gray-200: #4a4a4a;
+    --color-gray-600: #cccccc;
+    */
+  }
+}
+
+/* ==========================================================================
+   5. PRINT STYLES - Optimize for printing
+   ========================================================================== */
+
+@media print {
+  /* Hide interactive elements */
+  .dashboard-header,
+  .dashboard-nav,
+  .dashboard-breadcrumbs,
+  .btn,
+  .communication-section,
+  .tab-navigation {
+    display: none !important;
+  }
+  
+  /* Optimize layout for print */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .dashboard-content {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
+  }
+  
+  .dashboard-layout {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  
+  .profile-card,
+  .content-frame {
+    width: 100% !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+  
+  /* Ensure text is readable */
+  .tab-content__heading,
+  .profile-card__name,
+  .document-section__title {
+    color: black !important;
+  }
+  
+  /* Page breaks */
+  .profile-card {
+    page-break-after: avoid;
+  }
+  
+  .tab-content {
+    page-break-inside: avoid;
+  }
+}
+
+/* ==========================================================================
+   6. BROWSER-SPECIFIC FIXES
+   ========================================================================== */
+
+/* Safari-specific fixes */
+@supports (-webkit-appearance: none) {
+  .dropdown__select {
+    background-image: none;
+  }
+}
+
+/* Firefox-specific fixes */
+@-moz-document url-prefix() {
+  .tab-navigation__button {
+    /* Firefox button reset */
+    border: none;
+    background: none;
+  }
+}
+
+/* Edge/IE specific fixes */
+@supports (-ms-overflow-style: none) {
+  .tab-content {
+    -ms-overflow-style: none;
+  }
+}
+
+/* ==========================================================================
+   7. PERFORMANCE OPTIMIZATIONS
+   ========================================================================== */
+
+/* GPU acceleration for smooth animations */
+.tab-content,
+.dashboard-nav__item,
+.btn,
+.communication-section__button {
+  will-change: transform;
+}
+
+/* Contain layout shifts */
+.tab-content-container {
+  contain: layout style paint;
+}
+
+.profile-card {
+  contain: layout style;
+}
+
+/* ==========================================================================
+   8. DEBUGGING UTILITIES (Remove in production)
+   ========================================================================== */
+
+/* Uncomment for layout debugging */
+/*
+.debug * {
+  outline: 1px solid red !important;
+}
+
+.debug .dashboard-layout {
+  outline: 2px solid blue !important;
+}
+
+.debug .profile-card {
+  outline: 2px solid green !important;
+}
+
+.debug .content-frame {
+  outline: 2px solid orange !important;
+}
+*/
+
+/* ==========================================================================
+   END OF MAIN STYLESHEET
+   
+   Notes:
+   - Modify component files in the components/ directory
+   - CSS custom properties are defined in base/variables.css
+   - Follow BEM methodology for new classes
+   - Test responsive design across all breakpoints
+   - Validate accessibility with screen readers
+   - Consider performance impact of new styles
+   ========================================================================== */
+
