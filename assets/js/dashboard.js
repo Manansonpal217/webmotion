@@ -337,6 +337,12 @@ class WebMotionDashboard {
         // Bind options dropdown functionality
         this.bindOptionsDropdown();
         
+        // Bind dashboard navigation menu functionality
+        this.bindDashboardNavigation();
+        
+        // Bind header menu button functionality
+        this.bindHeaderMenuButton();
+        
         console.log(`Bound events to ${tabButtons.length} tab buttons`);
     }
     
@@ -1133,6 +1139,264 @@ class WebMotionDashboard {
         // - Remove the item from the UI
         // - Refresh the data
     }
+    
+    /**
+     * Bind event listeners for the dashboard navigation menu
+     * Handles menu item clicks and active state management
+     */
+    bindDashboardNavigation() {
+        const menuItems = document.querySelectorAll('.dashboard-nav__item');
+        
+        if (menuItems.length === 0) {
+            console.warn('Dashboard navigation menu items not found');
+            return;
+        }
+        
+        menuItems.forEach(menuItem => {
+            menuItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.setActiveMenuItem(menuItem);
+            });
+            
+            // Keyboard support
+            menuItem.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.setActiveMenuItem(menuItem);
+                }
+            });
+        });
+        
+        console.log(`Dashboard navigation events bound to ${menuItems.length} menu items`);
+    }
+    
+    /**
+     * Set the active menu item and update UI states
+     * @param {HTMLElement} clickedMenuItem - The menu item that was clicked
+     */
+    setActiveMenuItem(clickedMenuItem) {
+        try {
+            const menuItems = document.querySelectorAll('.dashboard-nav__item');
+            
+            // Remove active class from all menu items
+            menuItems.forEach(item => {
+                item.classList.remove('dashboard-nav__item--active');
+                item.setAttribute('aria-selected', 'false');
+            });
+            
+            // Add active class to clicked menu item
+            clickedMenuItem.classList.add('dashboard-nav__item--active');
+            clickedMenuItem.setAttribute('aria-selected', 'true');
+            
+            // Focus management for accessibility
+            clickedMenuItem.focus();
+            
+            // Get menu item text and data for event dispatching
+            const menuText = clickedMenuItem.textContent.trim();
+            const menuNumber = clickedMenuItem.getAttribute('data-menu');
+            const menuId = clickedMenuItem.id;
+            
+            console.log(`Menu item "${menuText}" (${menuId}) activated`);
+            
+            // Dispatch custom event for menu change
+            this.dispatchCustomEvent('menuChanged', {
+                menuItem: menuText,
+                menuNumber: menuNumber,
+                menuId: menuId,
+                element: clickedMenuItem,
+                timestamp: new Date().toISOString()
+            });
+            
+        } catch (error) {
+            console.error('Error setting active menu item:', error);
+            this.handleError(error, 'menu-activation');
+        }
+    }
+    
+    /**
+     * Get the currently active menu item
+     * @returns {HTMLElement|null} - Active menu item or null if none found
+     */
+    getActiveMenuItem() {
+        return document.querySelector('.dashboard-nav__item--active');
+    }
+    
+    /**
+     * Set active menu item by menu text
+     * @param {string} menuText - Text of the menu item to activate
+     */
+    setActiveMenuByText(menuText) {
+        const menuItems = document.querySelectorAll('.dashboard-nav__item');
+        const targetMenuItem = Array.from(menuItems).find(item => 
+            item.textContent.trim() === menuText
+        );
+        
+        if (targetMenuItem) {
+            this.setActiveMenuItem(targetMenuItem);
+        } else {
+            console.warn(`Menu item with text "${menuText}" not found`);
+        }
+    }
+    
+    /**
+     * Set active menu item by menu ID
+     * @param {string} menuId - ID of the menu item to activate (e.g., 'menu-1')
+     */
+    setActiveMenuById(menuId) {
+        const targetMenuItem = document.getElementById(menuId);
+        
+        if (targetMenuItem) {
+            this.setActiveMenuItem(targetMenuItem);
+        } else {
+            console.warn(`Menu item with ID "${menuId}" not found`);
+        }
+    }
+    
+    /**
+     * Set active menu item by data-menu attribute
+     * @param {string|number} menuNumber - Menu number (e.g., 1, 2, 3)
+     */
+    setActiveMenuByNumber(menuNumber) {
+        const targetMenuItem = document.querySelector(`[data-menu="${menuNumber}"]`);
+        
+        if (targetMenuItem) {
+            this.setActiveMenuItem(targetMenuItem);
+                 } else {
+             console.warn(`Menu item with number "${menuNumber}" not found`);
+         }
+     }
+     
+     /**
+      * Bind event listeners for the header menu button
+      * Handles menu toggle functionality and mobile navigation
+      */
+     bindHeaderMenuButton() {
+         const headerMenuBtn = document.querySelector('.header-menu-btn');
+         const dashboardNav = document.querySelector('.dashboard-nav');
+         const dashboardContent = document.querySelector('.dashboard-content');
+         
+         if (!headerMenuBtn) {
+             console.warn('Header menu button not found');
+             return;
+         }
+         
+         // Initialize menu state
+         let isMenuOpen = false;
+         
+         // Click handler
+         headerMenuBtn.addEventListener('click', (e) => {
+             e.preventDefault();
+             isMenuOpen = !isMenuOpen;
+             this.toggleHeaderMenu(isMenuOpen);
+         });
+         
+         // Keyboard support
+         headerMenuBtn.addEventListener('keydown', (e) => {
+             if (e.key === 'Enter' || e.key === ' ') {
+                 e.preventDefault();
+                 isMenuOpen = !isMenuOpen;
+                 this.toggleHeaderMenu(isMenuOpen);
+             }
+         });
+         
+         // Close menu when clicking outside (on mobile)
+         document.addEventListener('click', (e) => {
+             if (isMenuOpen && 
+                 !headerMenuBtn.contains(e.target) && 
+                 !dashboardNav?.contains(e.target)) {
+                 isMenuOpen = false;
+                 this.toggleHeaderMenu(false);
+             }
+         });
+         
+         // Close menu on escape key
+         document.addEventListener('keydown', (e) => {
+             if (e.key === 'Escape' && isMenuOpen) {
+                 isMenuOpen = false;
+                 this.toggleHeaderMenu(false);
+                 headerMenuBtn.focus();
+             }
+         });
+         
+         console.log('Header menu button events bound successfully');
+     }
+     
+     /**
+      * Toggle the header menu state
+      * @param {boolean} isOpen - Whether the menu should be open
+      */
+     toggleHeaderMenu(isOpen) {
+         const headerMenuBtn = document.querySelector('.header-menu-btn');
+         const dashboardNav = document.querySelector('.dashboard-nav');
+         const dashboardContent = document.querySelector('.dashboard-content');
+         const body = document.body;
+         
+         if (!headerMenuBtn || !dashboardNav) return;
+         
+         if (isOpen) {
+             // Open menu state
+             body.classList.add('header-menu-open');
+             dashboardNav.classList.add('dashboard-nav--mobile-open');
+             headerMenuBtn.classList.add('header-menu-btn--active');
+             headerMenuBtn.setAttribute('aria-expanded', 'true');
+             
+             // Add overlay for mobile
+             this.createMenuOverlay();
+             
+             // Dispatch event
+             this.dispatchCustomEvent('headerMenuOpened', {
+                 timestamp: new Date().toISOString()
+             });
+             
+             console.log('Header menu opened');
+             
+         } else {
+             // Close menu state
+             body.classList.remove('header-menu-open');
+             dashboardNav.classList.remove('dashboard-nav--mobile-open');
+             headerMenuBtn.classList.remove('header-menu-btn--active');
+             headerMenuBtn.setAttribute('aria-expanded', 'false');
+             
+             // Remove overlay
+             this.removeMenuOverlay();
+             
+             // Dispatch event
+             this.dispatchCustomEvent('headerMenuClosed', {
+                 timestamp: new Date().toISOString()
+             });
+             
+             console.log('Header menu closed');
+         }
+     }
+     
+     /**
+      * Create mobile menu overlay
+      */
+     createMenuOverlay() {
+         // Remove existing overlay first
+         this.removeMenuOverlay();
+         
+         const overlay = document.createElement('div');
+         overlay.className = 'header-menu-overlay';
+         overlay.setAttribute('aria-hidden', 'true');
+         
+         // Close menu when overlay is clicked
+         overlay.addEventListener('click', () => {
+             this.toggleHeaderMenu(false);
+         });
+         
+         document.body.appendChild(overlay);
+     }
+     
+     /**
+      * Remove mobile menu overlay
+      */
+     removeMenuOverlay() {
+         const existingOverlay = document.querySelector('.header-menu-overlay');
+         if (existingOverlay) {
+             existingOverlay.remove();
+         }
+     }
     
     /**
      * Handle keyboard navigation for tabs (arrow keys, home, end)
