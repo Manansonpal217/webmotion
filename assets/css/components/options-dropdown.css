@@ -1,0 +1,173 @@
+/* ==========================================================================
+   OPTIONS DROPDOWN COMPONENT
+   ==========================================================================
+   Description: Dropdown menu for add/edit/delete options on Option1 icon click
+   Dependencies: variables.css
+   ========================================================================== */
+
+/* Options Dropdown Container */
+.options-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Menu */
+.options-dropdown__menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: var(--spacing-xs);
+  background: var(--color-white);
+  color: var(--color-gray-600);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  min-width: 140px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  border: 1px solid var(--color-gray-300);
+}
+
+.options-dropdown--active .options-dropdown__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Dropdown Items */
+.options-dropdown__items {
+  padding: var(--spacing-xs);
+}
+
+.options-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-gray-600) !important;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-primary);
+}
+
+.options-dropdown__item:hover {
+  background: var(--color-gray-100) !important;
+  color: var(--color-black) !important;
+}
+
+.options-dropdown__item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.options-dropdown__item-icon {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: currentColor;
+  transition: color 0.2s ease;
+}
+
+.options-dropdown__item-text {
+  flex: 1;
+  color: inherit;
+}
+
+/* Specific item styles */
+.options-dropdown__item--add:hover {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.options-dropdown__item--edit:hover {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+  border: 1px solid #93c5fd !important;
+}
+
+.options-dropdown__item--delete:hover {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fca5a5 !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES - Options Dropdown
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .options-dropdown__menu {
+    min-width: 160px;
+    right: -10px;
+  }
+  
+  .options-dropdown__item {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .options-dropdown__menu {
+    position: fixed;
+    top: auto;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    margin: 0;
+    border-radius: var(--border-radius-lg);
+    min-width: auto;
+  }
+  
+  .options-dropdown__items {
+    padding: var(--spacing-sm);
+  }
+  
+  .options-dropdown__item {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* ==========================================================================
+   ANIMATIONS - Options Dropdown
+   ========================================================================== */
+
+@keyframes optionsDropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes optionsDropdownSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+.options-dropdown__menu--entering {
+  animation: optionsDropdownSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.options-dropdown__menu--exiting {
+  animation: optionsDropdownSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+} 

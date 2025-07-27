@@ -334,6 +334,9 @@ class WebMotionDashboard {
         // Bind notification modal functionality
         this.bindNotificationModal();
         
+        // Bind options dropdown functionality
+        this.bindOptionsDropdown();
+        
         console.log(`Bound events to ${tabButtons.length} tab buttons`);
     }
     
@@ -896,6 +899,239 @@ class WebMotionDashboard {
         setTimeout(() => {
             window.location.reload();
         }, 1000);
+    }
+    
+    /**
+     * Bind event listeners for the options dropdown
+     * Handles opening, closing, and menu interactions
+     */
+    bindOptionsDropdown() {
+        const optionsDropdownTrigger = document.getElementById('options-dropdown-trigger');
+        const optionsDropdownMenu = document.getElementById('options-dropdown-menu');
+        const optionsDropdown = document.querySelector('.options-dropdown');
+        const addOptionBtn = document.getElementById('add-option-btn');
+        const editOptionBtn = document.getElementById('edit-option-btn');
+        const deleteOptionBtn = document.getElementById('delete-option-btn');
+        
+        if (!optionsDropdownTrigger || !optionsDropdownMenu || !optionsDropdown) {
+            console.warn('Options dropdown elements not found');
+            return;
+        }
+        
+        // Toggle dropdown
+        optionsDropdownTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.toggleOptionsDropdown();
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            // Only close if options dropdown is active and click is outside
+            if (optionsDropdown.classList.contains('options-dropdown--active') && 
+                !optionsDropdown.contains(e.target)) {
+                this.closeOptionsDropdown();
+            }
+        });
+        
+        // Add option handler
+        if (addOptionBtn) {
+            addOptionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleAddOption();
+            });
+        }
+        
+        // Edit option handler
+        if (editOptionBtn) {
+            editOptionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleEditOption();
+            });
+        }
+        
+        // Delete option handler
+        if (deleteOptionBtn) {
+            deleteOptionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleDeleteOption();
+            });
+        }
+        
+        // Keyboard support
+        optionsDropdownTrigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.toggleOptionsDropdown();
+            }
+        });
+        
+        // Close dropdown on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (optionsDropdown.classList.contains('options-dropdown--active') && e.key === 'Escape') {
+                this.closeOptionsDropdown();
+            }
+        });
+        
+        console.log('Options dropdown events bound successfully');
+    }
+    
+    /**
+     * Toggle the options dropdown menu
+     */
+    toggleOptionsDropdown() {
+        const optionsDropdown = document.querySelector('.options-dropdown');
+        const isActive = optionsDropdown.classList.contains('options-dropdown--active');
+        
+        if (isActive) {
+            this.closeOptionsDropdown();
+        } else {
+            this.openOptionsDropdown();
+        }
+    }
+    
+    /**
+     * Open the options dropdown menu
+     */
+    openOptionsDropdown() {
+        const optionsDropdown = document.querySelector('.options-dropdown');
+        const optionsDropdownMenu = document.getElementById('options-dropdown-menu');
+        
+        if (!optionsDropdown || !optionsDropdownMenu) return;
+        
+        // Close other dropdowns first
+        this.closeUserDropdown();
+        this.closeNotificationModal();
+        
+        // Add active class
+        optionsDropdown.classList.add('options-dropdown--active');
+        optionsDropdownMenu.setAttribute('aria-hidden', 'false');
+        
+        // Focus management
+        const firstMenuItem = optionsDropdownMenu.querySelector('.options-dropdown__item');
+        if (firstMenuItem) {
+            setTimeout(() => firstMenuItem.focus(), 100);
+        }
+        
+        // Dispatch event
+        this.dispatchCustomEvent('optionsDropdownOpened', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Options dropdown opened');
+    }
+    
+    /**
+     * Close the options dropdown menu
+     */
+    closeOptionsDropdown() {
+        const optionsDropdown = document.querySelector('.options-dropdown');
+        const optionsDropdownMenu = document.getElementById('options-dropdown-menu');
+        
+        if (!optionsDropdown || !optionsDropdownMenu) return;
+        
+        // Remove active class
+        optionsDropdown.classList.remove('options-dropdown--active');
+        optionsDropdownMenu.setAttribute('aria-hidden', 'true');
+        
+        // Return focus to trigger
+        const optionsDropdownTrigger = document.getElementById('options-dropdown-trigger');
+        if (optionsDropdownTrigger) {
+            optionsDropdownTrigger.focus();
+        }
+        
+        // Dispatch event
+        this.dispatchCustomEvent('optionsDropdownClosed', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Options dropdown closed');
+    }
+    
+    /**
+     * Handle add option button click
+     */
+    handleAddOption() {
+        // Close dropdown
+        this.closeOptionsDropdown();
+        
+        // Dispatch event
+        this.dispatchCustomEvent('addOptionClicked', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Add option clicked');
+        
+        // Show success message or open add modal
+        this.showSuccessMessage('Add option selected');
+        
+        // In a real application, you might:
+        // - Open an add item modal
+        // - Navigate to an add page
+        // - Show an inline form
+    }
+    
+    /**
+     * Handle edit option button click
+     */
+    handleEditOption() {
+        // Close dropdown
+        this.closeOptionsDropdown();
+        
+        // Dispatch event
+        this.dispatchCustomEvent('editOptionClicked', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Edit option clicked');
+        
+        // Show success message or open edit modal
+        this.showSuccessMessage('Edit option selected');
+        
+        // In a real application, you might:
+        // - Open an edit item modal
+        // - Navigate to an edit page
+        // - Enable inline editing mode
+    }
+    
+    /**
+     * Handle delete option button click
+     */
+    handleDeleteOption() {
+        // Close dropdown
+        this.closeOptionsDropdown();
+        
+        // Dispatch event
+        this.dispatchCustomEvent('deleteOptionClicked', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Delete option clicked');
+        
+        // Show confirmation dialog
+        if (confirm('Are you sure you want to delete this item?')) {
+            this.performDeleteAction();
+        }
+    }
+    
+    /**
+     * Perform the actual delete action
+     */
+    performDeleteAction() {
+        // Dispatch delete event
+        this.dispatchCustomEvent('deleteActionConfirmed', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Delete action confirmed');
+        
+        // Show success message
+        this.showSuccessMessage('Item deleted successfully');
+        
+        // In a real application, you might:
+        // - Make an API call to delete the item
+        // - Remove the item from the UI
+        // - Refresh the data
     }
     
     /**
