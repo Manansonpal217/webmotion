@@ -287,13 +287,26 @@
     height: auto;
     min-height: 100px;
     position: relative;
+    overflow: hidden;
   }
   
   .tab-content {
-    position: absolute;
-    height: auto;
+    display: none;
+  }
+  
+  .tab-content--active {
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
     min-height: 100px;
     padding: var(--spacing-lg);
+    overflow-y: visible !important;
+    overflow-x: hidden;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    z-index: 10;
   }
   
   .tab-content--active {
@@ -307,8 +320,13 @@
   }
   
   .tab-content__row {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+  
+  /* Ensure 2 columns persist on mobile */
+  .tab-content__rows {
+    overflow: visible;
   }
   
   .tab-content__section-title {
@@ -339,22 +357,25 @@
   .tab-content-container {
     height: auto;
     min-height: 80px;
+    overflow: hidden;
   }
   
   .tab-content {
-    position: absolute;
-    height: auto;
-    min-height: 80px;
-    padding: var(--spacing-md);
+    display: none;
   }
   
   .tab-content--active {
+    display: block !important;
     position: relative !important;
     height: auto !important;
     min-height: 80px;
+    padding: var(--spacing-md);
+    overflow-y: visible !important;
+    overflow-x: hidden;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
+    filter: none !important;
     z-index: 10;
   }
   
@@ -396,6 +417,10 @@
   
   .tab-content {
     padding: 0.5rem;
+  }
+  
+  .tab-content__row {
+    gap: var(--spacing-sm);
   }
   
   .tab-content__item {
