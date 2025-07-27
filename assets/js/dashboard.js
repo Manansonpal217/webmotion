@@ -331,6 +331,9 @@ class WebMotionDashboard {
         // Bind user dropdown functionality
         this.bindUserDropdown();
         
+        // Bind notification modal functionality
+        this.bindNotificationModal();
+        
         console.log(`Bound events to ${tabButtons.length} tab buttons`);
     }
     
@@ -599,6 +602,113 @@ class WebMotionDashboard {
         
         // For now, just log the message
         // In a real implementation, you might show a toast notification
+    }
+    
+    /**
+     * Bind event listeners for the notification modal
+     */
+    bindNotificationModal() {
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationModal = document.getElementById('notification-modal');
+        const notificationCloseBtn = document.getElementById('notification-close-btn');
+        
+        if (!notificationBtn || !notificationModal || !notificationCloseBtn) {
+            console.warn('Notification modal elements not found');
+            return;
+        }
+        
+        // Toggle notification modal
+        notificationBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.toggleNotificationModal();
+        });
+        
+        // Close modal when clicking close button
+        notificationCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.closeNotificationModal();
+        });
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            // Only close if notification modal is active and click is outside
+            if (notificationModal.classList.contains('notification-modal--active') && 
+                !notificationModal.contains(e.target) && 
+                !notificationBtn.contains(e.target)) {
+                this.closeNotificationModal();
+            }
+        });
+        
+        // Keyboard support
+        notificationBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.toggleNotificationModal();
+            }
+        });
+        
+        console.log('Notification modal events bound successfully');
+    }
+    
+    /**
+     * Toggle the notification modal
+     */
+    toggleNotificationModal() {
+        const notificationModal = document.getElementById('notification-modal');
+        const isActive = notificationModal.classList.contains('notification-modal--active');
+        
+        if (isActive) {
+            this.closeNotificationModal();
+        } else {
+            this.openNotificationModal();
+        }
+    }
+    
+    /**
+     * Open the notification modal
+     */
+    openNotificationModal() {
+        const notificationModal = document.getElementById('notification-modal');
+        
+        if (!notificationModal) return;
+        
+        // Add active class
+        notificationModal.classList.add('notification-modal--active');
+        notificationModal.setAttribute('aria-hidden', 'false');
+        
+        // Dispatch event
+        this.dispatchCustomEvent('notificationModalOpened', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Notification modal opened');
+    }
+    
+    /**
+     * Close the notification modal
+     */
+    closeNotificationModal() {
+        const notificationModal = document.getElementById('notification-modal');
+        
+        if (!notificationModal) return;
+        
+        // Remove active class
+        notificationModal.classList.remove('notification-modal--active');
+        notificationModal.setAttribute('aria-hidden', 'true');
+        
+        // Return focus to trigger
+        const notificationBtn = document.getElementById('notification-btn');
+        if (notificationBtn) {
+            notificationBtn.focus();
+        }
+        
+        // Dispatch event
+        this.dispatchCustomEvent('notificationModalClosed', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Notification modal closed');
     }
     
     /**

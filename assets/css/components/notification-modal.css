@@ -1,0 +1,209 @@
+/* ==========================================================================
+   NOTIFICATION MODAL COMPONENT
+   ==========================================================================
+   Description: Small notification modal that appears attached to the notification button
+   Dependencies: variables.css
+   ========================================================================== */
+
+/* ==========================================================================
+   NOTIFICATION MODAL
+   ========================================================================== */
+
+.notification-modal {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 280px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-gray-200);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: var(--spacing-sm);
+}
+
+.notification-modal--active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Modal arrow pointing to button */
+.notification-modal::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--color-white);
+  z-index: 1;
+}
+
+.notification-modal::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--color-gray-200);
+  z-index: 0;
+}
+
+/* ==========================================================================
+   MODAL CONTENT
+   ========================================================================== */
+
+.notification-modal__content {
+  position: relative;
+  z-index: 2;
+}
+
+.notification-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-gray-200);
+  background: var(--color-gray-50);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.notification-modal__title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-700);
+  margin: 0;
+}
+
+.notification-modal__close {
+  background: none;
+  border: none;
+  padding: var(--spacing-xs);
+  cursor: pointer;
+  color: var(--color-gray-500);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-modal__close:hover {
+  background: var(--color-gray-200);
+  color: var(--color-gray-700);
+}
+
+/* ==========================================================================
+   MODAL BODY
+   ========================================================================== */
+
+.notification-modal__body {
+  padding: var(--spacing-lg);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-modal__empty-state {
+  text-align: center;
+  color: var(--color-gray-500);
+}
+
+.notification-modal__empty-icon {
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  justify-content: center;
+}
+
+.notification-modal__empty-icon svg {
+  color: var(--color-gray-400);
+}
+
+.notification-modal__empty-text {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+  color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .notification-modal {
+    width: 260px;
+    right: -10px;
+  }
+  
+  .notification-modal::before,
+  .notification-modal::after {
+    right: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .notification-modal {
+    width: 240px;
+    right: -20px;
+  }
+  
+  .notification-modal::before,
+  .notification-modal::after {
+    right: 40px;
+  }
+  
+  .notification-modal__header {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .notification-modal__body {
+    padding: var(--spacing-md);
+    min-height: 100px;
+  }
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes notificationSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes notificationSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+.notification-modal--active {
+  animation: notificationSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notification-modal:not(.notification-modal--active) {
+  animation: notificationSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+} 

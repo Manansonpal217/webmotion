@@ -310,8 +310,44 @@
     padding: var(--spacing-lg);
   }
   
+  .dashboard-layout {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  
+  .profile-card {
+    width: 100%;
+    height: auto;
+  }
+  
+  .content-frame {
+    width: 100%;
+    height: auto;
+    flex: none;
+  }
+  
+  .content-frame__header {
+    height: auto;
+    min-height: auto;
+  }
+  
+  .content-frame__header-content {
+    height: auto;
+    min-height: auto;
+  }
+  
+  .content-frame__body {
+    height: auto;
+    min-height: auto;
+  }
+  
+  .content-frame__body-content {
+    height: auto;
+  }
+  
   .content-frame__body {
     padding: var(--spacing-lg);
+    margin-top: var(--spacing-md);
   }
   
   .grid--cols-4,
@@ -340,12 +376,14 @@
     padding: var(--spacing-md);
   }
   
-  .content-frame__body {
-    padding: var(--spacing-md);
-  }
-  
   .dashboard-layout {
     gap: var(--spacing-md);
+  }
+  
+
+  
+  .content-frame__body {
+    padding: var(--spacing-md);
   }
 }
 

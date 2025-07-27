@@ -88,9 +88,34 @@
                 </div>
             </div>
             
-            <button class="header-icon-btn" type="button" aria-label="Notifications">
+            <button class="header-icon-btn" type="button" aria-label="Notifications" id="notification-btn">
                 <img src="assets/images/Notification.png" alt="" class="header-icon-btn__icon header-icon-btn__icon--bell">
             </button>
+            
+            <!-- Notification Modal -->
+            <div class="notification-modal" id="notification-modal" role="dialog" aria-labelledby="notification-modal-title" aria-hidden="true">
+                <div class="notification-modal__content">
+                    <div class="notification-modal__header">
+                        <h3 class="notification-modal__title" id="notification-modal-title">Notifications</h3>
+                        <button class="notification-modal__close" type="button" aria-label="Close notifications" id="notification-close-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="notification-modal__body">
+                        <div class="notification-modal__empty-state">
+                            <div class="notification-modal__empty-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 8A6 6 0 0 0 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M13.73 21A2 2 0 0 1 10.27 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <p class="notification-modal__empty-text">No new notifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
