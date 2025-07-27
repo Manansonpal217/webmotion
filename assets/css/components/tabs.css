@@ -15,6 +15,7 @@
   background: var(--color-gray-50);
   border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
   margin-bottom: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tab-navigation__button {
@@ -26,17 +27,25 @@
   color: var(--color-gray-500);
   cursor: pointer;
   position: relative;
-  transition: all var(--transition-normal);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
   margin-right: var(--spacing-xs);
   font-family: var(--font-family-primary);
   outline: none;
+  transform: translateY(0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
+
+
 
 .tab-navigation__button:hover {
   color: var(--color-gray-600);
   background: #D6D6D6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .tab-navigation__button:focus-visible {
   outline: 2px solid var(--color-primary);
@@ -46,11 +55,11 @@
 .tab-navigation__button--active {
   background: var(--color-white);
   color: var(--color-primary);
-  font-weight: var(--font-weight-regular);
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  border-bottom: 2px solid var(--color-white);
+  font-weight: var(--font-weight-semibold);
   z-index: 1;
 }
+
+
 
 /* ==========================================================================
    TAB CONTENT
@@ -59,8 +68,10 @@
 .tab-content-container {
   flex: 1;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
+  min-height: 0;
   background: var(--color-white);
   border-top: none;
   border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
@@ -74,19 +85,22 @@
   height: 100%;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(var(--spacing-xl));
-  transition: all var(--transition-normal);
+  transform: translateX(30px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: auto;
+  overflow-x: hidden;
   background: var(--color-white);
   padding: var(--spacing-xl);
   border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+  filter: blur(2px);
 }
 
 .tab-content--active {
   opacity: 1;
   visibility: visible;
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
   z-index: 1;
+  filter: blur(0);
 }
 
 /* Tab content scrollbar */
@@ -205,16 +219,39 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(var(--spacing-lg));
+    transform: translateY(20px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+
+
 .tab-content--active .tab-content__item {
-  animation: fadeInUp 0.4s ease-out;
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: both;
+}
+
+.tab-content--active .tab-content__heading {
+  animation: slideInFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: both;
+}
+
+.tab-content--active .tab-content__section-heading {
+  animation: slideInFromRight 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: both;
 }
 
@@ -223,6 +260,11 @@
 .tab-content--active .tab-content__item:nth-child(3) { animation-delay: 0.3s; }
 .tab-content--active .tab-content__item:nth-child(4) { animation-delay: 0.4s; }
 .tab-content--active .tab-content__item:nth-child(5) { animation-delay: 0.5s; }
+.tab-content--active .tab-content__item:nth-child(6) { animation-delay: 0.6s; }
+.tab-content--active .tab-content__item:nth-child(7) { animation-delay: 0.7s; }
+.tab-content--active .tab-content__item:nth-child(8) { animation-delay: 0.8s; }
+
+
 
 /* ==========================================================================
    RESPONSIVE STYLES - Tabs

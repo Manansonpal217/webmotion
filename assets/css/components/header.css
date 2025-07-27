@@ -9,7 +9,7 @@
   background: var(--color-primary);
   color: var(--color-white);
   padding: 0 var(--spacing-xl);
-  height: var(--header-height);
+  /* height: var(--header-height); */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,12 +37,12 @@
   border: none;
   color: var(--color-white);
   cursor: pointer;
-  padding: var(--spacing-lg) var(--spacing-sm);
+  /* padding: var(--spacing-lg) var(--spacing-xl); */
   border-radius: var(--border-radius-sm);
   transition: background-color var(--transition-fast);
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
 }
@@ -57,13 +57,20 @@
 }
 
 .header-menu-btn__icon {
-  width: 0.875rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1rem;
   filter: brightness(0) invert(1);
 }
 
 .header-menu-btn__text {
-  /* Text will be hidden on mobile via responsive styles */
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0;
+  vertical-align: middle;
+  color: var(--color-white);
 }
 
 /* Header Icon Buttons */
@@ -110,6 +117,20 @@
   height: 1.25rem;
 }
 
+/* Auto-save button refresh animation */
+.header-icon-btn[aria-label="Auto-save notifications"].refreshing .header-icon-btn__icon--notification {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Header Title */
 .dashboard-header__title {
   font-weight: var(--font-weight-semibold);
@@ -124,6 +145,7 @@
   font-size: var(--font-size-sm);
   line-height: var(--line-height-tight);
   margin-right: var(--spacing-md);
+  color: var(--color-white);
 }
 
 /* ==========================================================================

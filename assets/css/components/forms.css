@@ -16,6 +16,11 @@
   position: relative;
 }
 
+/* Disabled dropdown container */
+.dropdown:has(.dropdown__select:disabled) {
+  cursor: not-allowed;
+}
+
 .dropdown:last-child {
   border-right: none;
 }
@@ -33,8 +38,8 @@
   background-position: center;
   background-size: contain;
   pointer-events: none;
-  opacity: 0.5;
-  transition: opacity var(--transition-fast);
+  opacity: 0.7;
+  z-index: 5;
 }
 
 .dropdown__select {
@@ -50,8 +55,7 @@
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-tight);
-  cursor: not-allowed;
-  transition: all var(--transition-fast);
+  cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -63,6 +67,11 @@
 
 .dropdown__select:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dropdown__select:disabled:hover {
   cursor: not-allowed;
 }
 
@@ -98,14 +107,17 @@
 }
 
 /* Custom dropdown icons for active dropdowns */
-.dropdown--primary::after,
-.dropdown--secondary::after,
-.dropdown--tertiary::after {
+.dropdown.dropdown--primary::after,
+.dropdown.dropdown--secondary::after,
+.dropdown.dropdown--tertiary::after {
   filter: brightness(0) invert(1);
   opacity: 1;
   background-image: url('../../icons/Dropdown.svg');
   width: 0.625rem;
   height: 0.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 /* Hover states for active dropdowns */

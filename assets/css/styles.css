@@ -40,6 +40,8 @@
 @import 'components/forms.css';
 @import 'components/profile-card.css';
 @import 'components/tabs.css';
+@import 'components/email-modal.css';
+@import 'components/user-dropdown.css';
 
 /* ==========================================================================
    4. RESPONSIVE DESIGN - Global responsive utilities

@@ -27,6 +27,8 @@
   --color-gray-600: #404040;
   
   --color-success: #A2D729;
+  --color-danger: #DC3545;
+  --color-danger-light: #F8D7DA;
   
   /* Typography */
   --font-family-primary: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -71,9 +73,9 @@
   --transition-normal: 0.3s ease;
   
   /* Layout */
-  --header-height: 3.75rem;      /* 60px */
+  --header-height: 3rem;      /* 52px */
   --header-height-mobile: 3rem;  /* 48px */
-  --sidebar-width: 4.5rem;       /* 72px */
+  --sidebar-width: 3rem;       /* 72px */
 }
 
 /* ==========================================================================
@@ -97,7 +99,8 @@ html {
 html,
 body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {

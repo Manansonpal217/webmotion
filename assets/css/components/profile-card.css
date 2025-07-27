@@ -10,13 +10,23 @@
   border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-md);
   padding: var(--spacing-xl);
-  width: 45%;
+  width: 40%;
   margin: 0;
-  height: fit-content;
-  max-height: 100%;
-  overflow: visible;
+  /* height: calc(100vh - 2rem);
+  max-height: calc(100vh - 2rem); */
+  overflow-y: auto;
+  overflow-x: hidden;
   flex-shrink: 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.profile-card::-webkit-scrollbar {
+  display: none;
+}
+
+
 
 /* ==========================================================================
    PROFILE HEADER
@@ -26,7 +36,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--spacing-2xl);
+  width: 100%;
+  margin-bottom: var(--spacing-xl);
   padding-bottom: var(--spacing-lg);
   border-bottom: 1px solid var(--color-gray-200);
 }
@@ -34,15 +45,17 @@
 .profile-card__info {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
+  flex: 1;
+  width: 100%;
 }
 
 .profile-card__avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 6.25rem;
-  height: 6.25rem;
+  width: 5rem;
+  height: 5rem;
   flex-shrink: 0;
 }
 
@@ -55,15 +68,16 @@
 
 .profile-card__details {
   display: flex;
+  width: 100%;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  /* gap: var(--spacing-sm); */
 }
 
 .profile-card__header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 3.75rem;
+  gap: var(--spacing-lg);
   width: 100%;
   margin-bottom: var(--spacing-lg);
 }
@@ -78,6 +92,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+  flex-shrink: 0;
 }
 
 .profile-card__name {
@@ -144,7 +159,7 @@
   font-size: var(--font-size-base);
   line-height: var(--line-height-tight);
   color: var(--color-gray-600);
-  min-width: 7.5rem;
+  min-width: 6rem;
   display: inline-flex;
   align-items: center;
 }
@@ -164,7 +179,7 @@
 
 .communication-section {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   margin-bottom: var(--spacing-lg);
   padding-bottom: var(--spacing-md);
   border-bottom: 1px solid var(--color-gray-200);
@@ -186,7 +201,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  padding-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
   border-bottom: 1px solid var(--color-gray-200);
 }
 
@@ -212,8 +227,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: var(--spacing-2xl);
-  padding-bottom: var(--spacing-2xl);
+  margin-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
 }
 
 .document-section__info-group h4 {
@@ -246,20 +261,41 @@
 }
 
 .document-section__type {
-  padding-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
 }
 
 .document-section__workflow-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-lg);
-  padding-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  visibility: visible;
+  opacity: 1;
 }
 
 .document-section__workflow-item {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  visibility: visible;
+  opacity: 1;
+}
+
+.document-section__workflow-item h4 {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-tight);
+  color: var(--color-gray-600);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.document-section__workflow-item p {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-sm);
+  line-height: 1.29;
+  color: var(--color-gray-600);
+  margin: 0;
 }
 
 .document-section__users {
@@ -279,13 +315,13 @@
   display: flex;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
 .document-section__user-tag {
   background: var(--color-gray-50);
   color: var(--color-gray-600);
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
@@ -295,6 +331,216 @@
 /* ==========================================================================
    RESPONSIVE STYLES - Profile Card
    ========================================================================== */
+
+/* Large screens - increase font sizes and spacing */
+@media (min-width: 1400px) {
+  .profile-card {
+    padding: var(--spacing-2xl);
+  }
+  
+  .profile-card__name {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+  }
+  
+  .profile-card__age-tag {
+    font-size: var(--font-size-sm);
+    padding: 0.5rem 1rem;
+    height: 2.5rem;
+  }
+  
+  .profile-card__subtitle {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+  }
+  
+  .profile-info-section__label {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+    min-width: 8rem;
+  }
+  
+  .profile-info-section__value {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+  }
+  
+  .document-section__title {
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-normal);
+  }
+  
+  .document-section__info-group h4 {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+  }
+  
+  .document-section__info-group p {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+  }
+  
+  .document-section__workflow-item h4 {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+  }
+  
+  .document-section__workflow-item p {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+  }
+  
+  .document-section__users-title {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+  }
+  
+  .document-section__user-tag {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .profile-card__header {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-xl);
+  }
+  
+  .profile-card__avatar {
+    width: 6rem;
+    height: 6rem;
+  }
+  
+  .profile-info-section {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+  }
+  
+  .communication-section {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+  }
+  
+  .document-section__main-info {
+    margin-top: var(--spacing-2xl);
+    padding-bottom: var(--spacing-2xl);
+  }
+  
+  .document-section__workflow-grid {
+    gap: var(--spacing-xl);
+    padding-bottom: var(--spacing-2xl);
+    margin-top: var(--spacing-xl);
+  }
+  
+  .document-section__user-tags {
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+  }
+}
+
+/* Extra large screens - even larger scaling */
+@media (min-width: 1600px) {
+  .profile-card {
+    padding: var(--spacing-3xl);
+  }
+  
+  .profile-card__name {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .profile-card__age-tag {
+    font-size: var(--font-size-base);
+    padding: 0.625rem 1.25rem;
+    height: 2.75rem;
+  }
+  
+  .profile-card__subtitle {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .profile-info-section__label {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+    min-width: 10rem;
+  }
+  
+  .profile-info-section__value {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .document-section__title {
+    font-size: var(--font-size-3xl);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .document-section__info-group h4 {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .document-section__info-group p {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .document-section__workflow-item h4 {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .document-section__workflow-item p {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .document-section__users-title {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .document-section__user-tag {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+  
+  .profile-card__header {
+    margin-bottom: var(--spacing-3xl);
+    padding-bottom: var(--spacing-2xl);
+  }
+  
+  .profile-card__avatar {
+    width: 7rem;
+    height: 7rem;
+  }
+  
+  .profile-info-section {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-xl);
+  }
+  
+  .communication-section {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-xl);
+  }
+  
+  .document-section__main-info {
+    margin-top: var(--spacing-3xl);
+    padding-bottom: var(--spacing-3xl);
+  }
+  
+  .document-section__workflow-grid {
+    gap: var(--spacing-2xl);
+    padding-bottom: var(--spacing-3xl);
+    margin-top: var(--spacing-2xl);
+  }
+  
+  .document-section__user-tags {
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+}
 
 @media (max-width: 1200px) {
   .profile-card {
@@ -306,6 +552,14 @@
 @media (max-width: 768px) {
   .profile-card {
     padding: var(--spacing-lg);
+  }
+  
+  .profile-card__header {
+    width: 100%;
+  }
+  
+  .profile-card__info {
+    width: 100%;
   }
   
   .profile-card__header-row {
@@ -320,7 +574,7 @@
   }
   
   .document-section__workflow-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
   
   .communication-section {
@@ -333,13 +587,18 @@
     padding: var(--spacing-md);
   }
   
-  .profile-card__avatar {
-    width: 5rem;
-    height: 5rem;
+  .profile-card__header {
+    width: 100%;
   }
   
   .profile-card__info {
+    width: 100%;
     gap: var(--spacing-md);
+  }
+  
+  .profile-card__avatar {
+    width: 5rem;
+    height: 5rem;
   }
   
   .document-section__workflow-grid {

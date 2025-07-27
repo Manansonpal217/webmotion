@@ -319,7 +319,473 @@ class WebMotionDashboard {
             });
         });
         
+        // Bind Start Timer button functionality
+        this.bindStartTimerButton();
+        
+        // Bind auto-save button functionality
+        this.bindAutoSaveButton();
+        
+        // Bind email modal functionality
+        this.bindEmailModal();
+        
+        // Bind user dropdown functionality
+        this.bindUserDropdown();
+        
         console.log(`Bound events to ${tabButtons.length} tab buttons`);
+    }
+    
+    /**
+     * Bind event listener for the Start Timer button
+     * Starts a running timer when clicked
+     */
+    bindStartTimerButton() {
+        const startTimerButton = document.querySelector('.btn.btn--primary');
+        
+        if (startTimerButton) {
+            let timerInterval = null;
+            let startTime = null;
+            let isRunning = false;
+            
+            startTimerButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                if (!isRunning) {
+                    // Start the timer
+                    startTime = new Date();
+                    isRunning = true;
+                    
+                    // Add visual feedback
+                    startTimerButton.classList.add('btn--active');
+                    
+                    // Start the timer interval
+                    timerInterval = setInterval(() => {
+                        const now = new Date();
+                        const elapsed = now - startTime;
+                        const seconds = Math.floor(elapsed / 1000);
+                        const minutes = Math.floor(seconds / 60);
+                        const hours = Math.floor(minutes / 60);
+                        
+                        // Format time as HH:MM:SS
+                        const formattedTime = [
+                            hours.toString().padStart(2, '0'),
+                            (minutes % 60).toString().padStart(2, '0'),
+                            (seconds % 60).toString().padStart(2, '0')
+                        ].join(':');
+                        
+                        // Update button text with running timer
+                        startTimerButton.textContent = formattedTime;
+                    }, 1000);
+                    
+                    // Dispatch custom event
+                    this.dispatchCustomEvent('timerStarted', {
+                        startTime: startTime.toISOString(),
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    console.log('Timer started');
+                    
+                } else {
+                    // Stop the timer
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                    }
+                    
+                    isRunning = false;
+                    startTimerButton.classList.remove('btn--active');
+                    startTimerButton.textContent = 'Start Timer';
+                    
+                    // Dispatch custom event
+                    this.dispatchCustomEvent('timerStopped', {
+                        startTime: startTime?.toISOString(),
+                        stopTime: new Date().toISOString()
+                    });
+                    
+                    console.log('Timer stopped');
+                }
+            });
+            
+            console.log('Start Timer button event bound successfully');
+        } else {
+            console.warn('Start Timer button not found');
+        }
+    }
+    
+
+    
+    /**
+     * Bind event listener for the auto-save notifications button
+     * Refreshes the entire page with animation
+     */
+    bindAutoSaveButton() {
+        const autoSaveButton = document.querySelector('.header-icon-btn[aria-label="Auto-save notifications"]');
+        
+        if (autoSaveButton) {
+            autoSaveButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Add refreshing class for animation
+                autoSaveButton.classList.add('refreshing');
+                
+                // Dispatch custom event
+                this.dispatchCustomEvent('autoSaveRefreshStarted', {
+                    timestamp: new Date().toISOString()
+                });
+                
+                console.log('Auto-save refresh initiated');
+                
+                // Wait for animation to complete then refresh
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // Wait 1 second for the spin animation
+                
+            });
+            
+            console.log('Auto-save button event bound successfully');
+        } else {
+            console.warn('Auto-save button not found');
+        }
+    }
+    
+    /**
+     * Bind event listeners for the email modal
+     * Handles opening, closing, and form interactions
+     */
+    bindEmailModal() {
+        const emailButton = document.getElementById('email-notifications-btn');
+        const emailModal = document.getElementById('email-modal');
+        const modalOverlay = document.getElementById('email-modal-overlay');
+        const closeButton = document.getElementById('email-modal-close');
+        const cancelButton = document.getElementById('email-modal-cancel');
+        const saveButton = document.getElementById('email-modal-save');
+        
+        if (!emailButton || !emailModal) {
+            console.warn('Email modal elements not found');
+            return;
+        }
+        
+        // Open modal
+        emailButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.openEmailModal();
+        });
+        
+        // Close modal handlers
+        const closeModal = () => {
+            this.closeEmailModal();
+        };
+        
+        if (closeButton) closeButton.addEventListener('click', closeModal);
+        if (cancelButton) cancelButton.addEventListener('click', closeModal);
+        if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+        
+        // Save changes
+        if (saveButton) {
+            saveButton.addEventListener('click', () => {
+                this.saveEmailSettings();
+            });
+        }
+        
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (emailModal.classList.contains('email-modal--active') && e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        console.log('Email modal events bound successfully');
+    }
+    
+    /**
+     * Open the email modal with animation
+     */
+    openEmailModal() {
+        const emailModal = document.getElementById('email-modal');
+        if (!emailModal) return;
+        
+        // Show modal
+        emailModal.classList.add('email-modal--active');
+        emailModal.setAttribute('aria-hidden', 'false');
+        
+        // Focus management
+        const closeButton = document.getElementById('email-modal-close');
+        if (closeButton) {
+            setTimeout(() => closeButton.focus(), 100);
+        }
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        // Dispatch event
+        this.dispatchCustomEvent('emailModalOpened', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Email modal opened');
+    }
+    
+    /**
+     * Close the email modal with animation
+     */
+    closeEmailModal() {
+        const emailModal = document.getElementById('email-modal');
+        if (!emailModal) return;
+        
+        // Hide modal
+        emailModal.classList.remove('email-modal--active');
+        emailModal.setAttribute('aria-hidden', 'true');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        // Return focus to trigger button
+        const emailButton = document.getElementById('email-notifications-btn');
+        if (emailButton) {
+            emailButton.focus();
+        }
+        
+        // Dispatch event
+        this.dispatchCustomEvent('emailModalClosed', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Email modal closed');
+    }
+    
+    /**
+     * Save email settings and close modal
+     */
+    saveEmailSettings() {
+        // Get form values
+        const checkboxes = document.querySelectorAll('.email-modal__checkbox');
+        const frequency = document.getElementById('email-frequency');
+        const time = document.getElementById('email-time');
+        
+        const settings = {
+            notifications: {
+                dailyDigest: checkboxes[0]?.checked || false,
+                importantUpdates: checkboxes[1]?.checked || false,
+                marketing: checkboxes[2]?.checked || false,
+                systemNotifications: checkboxes[3]?.checked || false
+            },
+            preferences: {
+                frequency: frequency?.value || 'weekly',
+                time: time?.value || 'afternoon'
+            }
+        };
+        
+        // Dispatch save event
+        this.dispatchCustomEvent('emailSettingsSaved', {
+            settings: settings,
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Email settings saved:', settings);
+        
+        // Close modal
+        this.closeEmailModal();
+        
+        // Show success feedback (you could add a toast notification here)
+        this.showSuccessMessage('Email settings saved successfully!');
+    }
+    
+    /**
+     * Show success message (placeholder for future toast implementation)
+     * @param {string} message - Success message to display
+     */
+    showSuccessMessage(message) {
+        // This could be replaced with a proper toast notification system
+        console.log('Success:', message);
+        
+        // For now, just log the message
+        // In a real implementation, you might show a toast notification
+    }
+    
+    /**
+     * Bind event listeners for the user dropdown
+     * Handles opening, closing, and menu interactions
+     */
+    bindUserDropdown() {
+        const dropdownTrigger = document.getElementById('user-dropdown-trigger');
+        const dropdownMenu = document.getElementById('user-dropdown-menu');
+        const userDropdown = document.querySelector('.user-dropdown');
+        const profileSettingsBtn = document.getElementById('profile-settings-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        if (!dropdownTrigger || !dropdownMenu || !userDropdown) {
+            console.warn('User dropdown elements not found');
+            return;
+        }
+        
+        // Toggle dropdown
+        dropdownTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.toggleUserDropdown();
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            // Only close if user dropdown is active and click is outside
+            if (userDropdown.classList.contains('user-dropdown--active') && !userDropdown.contains(e.target)) {
+                this.closeUserDropdown();
+            }
+        });
+        
+        // Profile settings
+        if (profileSettingsBtn) {
+            profileSettingsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleProfileSettings();
+            });
+        }
+        
+        // Logout
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleLogout();
+            });
+        }
+        
+        // Keyboard support
+        dropdownTrigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.toggleUserDropdown();
+            }
+        });
+        
+        console.log('User dropdown events bound successfully');
+    }
+    
+    /**
+     * Toggle the user dropdown menu
+     */
+    toggleUserDropdown() {
+        const userDropdown = document.querySelector('.user-dropdown');
+        const isActive = userDropdown.classList.contains('user-dropdown--active');
+        
+        if (isActive) {
+            this.closeUserDropdown();
+        } else {
+            this.openUserDropdown();
+        }
+    }
+    
+    /**
+     * Open the user dropdown menu
+     */
+    openUserDropdown() {
+        const userDropdown = document.querySelector('.user-dropdown');
+        const dropdownMenu = document.getElementById('user-dropdown-menu');
+        
+        if (!userDropdown || !dropdownMenu) return;
+        
+        // Add active class
+        userDropdown.classList.add('user-dropdown--active');
+        dropdownMenu.setAttribute('aria-hidden', 'false');
+        
+        // Focus management
+        const firstMenuItem = dropdownMenu.querySelector('.user-dropdown__item');
+        if (firstMenuItem) {
+            setTimeout(() => firstMenuItem.focus(), 100);
+        }
+        
+        // Dispatch event
+        this.dispatchCustomEvent('userDropdownOpened', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('User dropdown opened');
+    }
+    
+    /**
+     * Close the user dropdown menu
+     */
+    closeUserDropdown() {
+        const userDropdown = document.querySelector('.user-dropdown');
+        const dropdownMenu = document.getElementById('user-dropdown-menu');
+        
+        if (!userDropdown || !dropdownMenu) return;
+        
+        // Remove active class
+        userDropdown.classList.remove('user-dropdown--active');
+        dropdownMenu.setAttribute('aria-hidden', 'true');
+        
+        // Return focus to trigger
+        const dropdownTrigger = document.getElementById('user-dropdown-trigger');
+        if (dropdownTrigger) {
+            dropdownTrigger.focus();
+        }
+        
+        // Dispatch event
+        this.dispatchCustomEvent('userDropdownClosed', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('User dropdown closed');
+    }
+    
+    /**
+     * Handle profile settings button click
+     */
+    handleProfileSettings() {
+        // Close dropdown
+        this.closeUserDropdown();
+        
+        // Dispatch event
+        this.dispatchCustomEvent('profileSettingsClicked', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Profile settings clicked');
+        
+        // You could open a profile settings modal here
+        // this.openProfileSettingsModal();
+    }
+    
+    /**
+     * Handle logout button click
+     */
+    handleLogout() {
+        // Close dropdown
+        this.closeUserDropdown();
+        
+        // Dispatch event
+        this.dispatchCustomEvent('logoutClicked', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Logout clicked');
+        
+        // Show confirmation dialog
+        if (confirm('Are you sure you want to logout?')) {
+            // Perform logout action
+            this.performLogout();
+        }
+    }
+    
+    /**
+     * Perform the actual logout action
+     */
+    performLogout() {
+        // Dispatch logout event
+        this.dispatchCustomEvent('logoutConfirmed', {
+            timestamp: new Date().toISOString()
+        });
+        
+        console.log('Logout confirmed - redirecting to login page');
+        
+        // In a real application, you would:
+        // 1. Clear authentication tokens
+        // 2. Clear user session
+        // 3. Redirect to login page
+        
+        // For demo purposes, just reload the page
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
     
     /**

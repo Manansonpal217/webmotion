@@ -52,6 +52,20 @@
   transform: translateY(1px);
 }
 
+/* Active state for timer button */
+.btn--primary.btn--active {
+  background: var(--color-success);
+  color: var(--color-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Courier New', monospace;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  min-width: 80px;
+  text-align: center;
+}
+
 /* Secondary Button */
 .btn--secondary {
   background: var(--color-gray-50);
@@ -82,8 +96,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: var(--spacing-sm);
-  padding: var(--spacing-sm) var(--spacing-md);
+  width: 84px;
+  height: 36px;
+  padding: 0;
   background: var(--color-gray-50);
   border-radius: var(--border-radius-md);
   cursor: pointer;
@@ -136,6 +153,15 @@
   line-height: var(--line-height-tight);
   color: var(--color-gray-600);
   margin-left: var(--spacing-xs);
+}
+
+/* WhatsApp Button - Specific width */
+.communication-section__button--whatsapp {
+  width: 113px !important;
+  height: 36px !important;
+  min-width: 113px;
+  max-width: 113px;
+  flex-shrink: 0;
 }
 
 /* Button Loading State */
@@ -235,8 +261,17 @@
   }
   
   .communication-section__button {
-    padding: var(--spacing-md) var(--spacing-lg);
-    min-height: 2.75rem;
+    width: 84px;
+    height: 36px;
+    padding: 0;
+  }
+  
+  .communication-section__button--whatsapp {
+    width: 113px !important;
+    height: 36px !important;
+    min-width: 113px;
+    max-width: 113px;
+    flex-shrink: 0;
   }
 }
 
@@ -250,5 +285,19 @@
     height: 2.5rem;
     padding: 0.5rem 1rem;
     font-size: var(--font-size-sm);
+  }
+  
+  .communication-section__button {
+    width: 84px;
+    height: 36px;
+    padding: 0;
+  }
+  
+  .communication-section__button--whatsapp {
+    width: 113px !important;
+    height: 36px !important;
+    min-width: 113px;
+    max-width: 113px;
+    flex-shrink: 0;
   }
 } 

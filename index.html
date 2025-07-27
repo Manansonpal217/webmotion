@@ -34,7 +34,7 @@
                 <img src="assets/images/autosave.png" alt="" class="header-icon-btn__icon header-icon-btn__icon--notification">
             </button>
             
-            <button class="header-icon-btn" type="button" aria-label="Email notifications">
+            <button class="header-icon-btn" type="button" aria-label="Email notifications" id="email-notifications-btn">
                 <img src="assets/images/email.png" alt="" class="header-icon-btn__icon header-icon-btn__icon--email">
             </button>
         </div>
@@ -44,9 +44,50 @@
             <h1 class="dashboard-header__title">Lorem Ipsum</h1>
         </div>
         
-        <!-- Right Section: User info and notifications -->
+                <!-- Right Section: User info and notifications -->
         <div class="dashboard-header__section">
-            <span class="dashboard-header__user-name">David Warner</span>
+            <div class="user-dropdown">
+                <button class="user-dropdown__trigger" type="button" aria-label="User menu" id="user-dropdown-trigger">
+                    <span class="dashboard-header__user-name">David Warner</span>
+                    <svg class="user-dropdown__arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                
+                <div class="user-dropdown__menu" id="user-dropdown-menu" role="menu" aria-hidden="true">
+                    <div class="user-dropdown__header">
+                        <div class="user-dropdown__avatar">
+                            <img src="assets/icons/Avatar.svg" alt="David Warner" class="user-dropdown__avatar-image">
+                        </div>
+                        <div class="user-dropdown__info">
+                            <div class="user-dropdown__name">David Warner</div>
+                            <div class="user-dropdown__email">david.warner@example.com</div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-dropdown__divider"></div>
+                    
+                    <div class="user-dropdown__items">
+                        <button class="user-dropdown__item" type="button" role="menuitem" id="profile-settings-btn">
+                            <svg class="user-dropdown__item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6 20C6 17.8783 6.84285 15.8434 8.34315 14.3431C9.84344 12.8429 11.8783 12 14 12C16.1217 12 18.1566 12.8429 19.6569 14.3431C21.1571 15.8434 22 17.8783 22 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="user-dropdown__item-text">Profile Settings</span>
+                        </button>
+                        
+                        <button class="user-dropdown__item" type="button" role="menuitem" id="logout-btn">
+                            <svg class="user-dropdown__item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="user-dropdown__item-text">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
             <button class="header-icon-btn" type="button" aria-label="Notifications">
                 <img src="assets/images/Notification.png" alt="" class="header-icon-btn__icon header-icon-btn__icon--bell">
             </button>
@@ -149,8 +190,8 @@
                             <span class="communication-section__text">eMail</span>
                         </button>
                         
-                        <button class="communication-section__button" type="button" aria-label="WhatsApp message">
-                            <img src="assets/icons/WhatsApp.svg" alt="" class="communication-section__icon communication-section__icon--whatsapp">
+                        <button class="communication-section__button communication-section__button--whatsapp" type="button" aria-label="WhatsApp message">
+                            <img src="assets/icons/WhatsApp.svg" alt="" class="communication-section__icon communication-section__icon--whatsapp ">
                             <span class="communication-section__text">WhatsApp</span>
                         </button>
                         
@@ -355,6 +396,83 @@
 
         
     <!-- External JavaScript -->
+    <!-- Email Modal -->
+    <div class="email-modal" id="email-modal" role="dialog" aria-labelledby="email-modal-title" aria-hidden="true">
+        <div class="email-modal__overlay" id="email-modal-overlay"></div>
+        <div class="email-modal__container">
+            <div class="email-modal__header">
+                <h2 class="email-modal__title" id="email-modal-title">Email Notifications</h2>
+                <button class="email-modal__close" type="button" aria-label="Close email modal" id="email-modal-close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="email-modal__content">
+                <div class="email-modal__section">
+                    <h3 class="email-modal__section-title">Notification Settings</h3>
+                    <div class="email-modal__settings">
+                        <label class="email-modal__setting">
+                            <input type="checkbox" class="email-modal__checkbox" checked>
+                            <span class="email-modal__checkbox-custom"></span>
+                            <span class="email-modal__setting-text">Daily digest emails</span>
+                        </label>
+                        
+                        <label class="email-modal__setting">
+                            <input type="checkbox" class="email-modal__checkbox" checked>
+                            <span class="email-modal__checkbox-custom"></span>
+                            <span class="email-modal__setting-text">Important updates</span>
+                        </label>
+                        
+                        <label class="email-modal__setting">
+                            <input type="checkbox" class="email-modal__checkbox">
+                            <span class="email-modal__checkbox-custom"></span>
+                            <span class="email-modal__setting-text">Marketing emails</span>
+                        </label>
+                        
+                        <label class="email-modal__setting">
+                            <input type="checkbox" class="email-modal__checkbox" checked>
+                            <span class="email-modal__checkbox-custom"></span>
+                            <span class="email-modal__setting-text">System notifications</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="email-modal__section">
+                    <h3 class="email-modal__section-title">Email Preferences</h3>
+                    <div class="email-modal__form">
+                        <div class="email-modal__form-group">
+                            <label for="email-frequency" class="email-modal__label">Email Frequency</label>
+                            <select id="email-frequency" class="email-modal__select">
+                                <option value="daily">Daily</option>
+                                <option value="weekly" selected>Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="never">Never</option>
+                            </select>
+                        </div>
+                        
+                        <div class="email-modal__form-group">
+                            <label for="email-time" class="email-modal__label">Preferred Time</label>
+                            <select id="email-time" class="email-modal__select">
+                                <option value="morning">Morning (9:00 AM)</option>
+                                <option value="afternoon" selected>Afternoon (2:00 PM)</option>
+                                <option value="evening">Evening (6:00 PM)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+            
+            <div class="email-modal__footer">
+                <button class="email-modal__btn email-modal__btn--secondary" type="button" id="email-modal-cancel">Cancel</button>
+                <button class="email-modal__btn email-modal__btn--primary" type="button" id="email-modal-save">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/js/dashboard.js"></script>
 </body>
 </html>
